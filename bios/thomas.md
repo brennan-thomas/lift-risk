@@ -1,4 +1,4 @@
-﻿**Brennan Thomas**
+﻿**Brennan Thomas**<br>
 thoma2bm@mail.uc.edu
 
 **Work Experience**
