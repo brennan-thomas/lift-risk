@@ -1,15 +1,19 @@
-## Project Description
+# Project Description
 
-### Lift Risk
+## Lift Risk
 
-#### Members
+### Members
 Brennan Thomas<br>
 Computer Science<br>
 thoma2bm@mail.uc.edu
 
-#### Faculty Advisor
+### Faculty Advisor
 Dr. Rashmi Jha<br>
 jhari@ucmail.uc.edu
 
-#### Project Topic Area
+### Project Topic Area
 Object lifting detection and risk classification using machine learning on IMU sensor data
+
+### [User Stories](User_Stories.md)
+
+### [Design Diagrams](Design_Diagrams)
