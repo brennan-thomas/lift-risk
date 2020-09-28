@@ -17,3 +17,5 @@ Object lifting detection and risk classification using machine learning on IMU s
 ### [User Stories](User_Stories.md)
 
 ### [Design Diagrams](Design_Diagrams)
+
+### [Task List](Tasklist.md)
