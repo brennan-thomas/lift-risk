@@ -6,15 +6,15 @@ A list of major milestones along with their deliverables and expected completion
 
 **Milestone:** Preprocessing
 * Deliverable: A python implementation of a preprocessing pipeline, able to consume saved training/testing data for use in the machine learning models
-* Expected Completion: Oct 31st 2020
+* Expected Completion: Oct 26th 2020
 
 **Milestone:** Lift Detection
 * Deliverable: A python implementation of a machine learning model capable of detecting if a lift occurred in a segment of accelerometer data received from the preprocessing pipeline
-* Expected Completion: Nov 31st 2020
+* Expected Completion: Dec 1st 2020
 
 **Milestone:** Lift Classification
 * Deliverable: A python implementation of a machine learning model capable of classifying the risk level of a segment of accelerometer data received from the preprocessing pipeline
-* Expected Completion: Dec 31st 2020
+* Expected Completion: Jan 5th 2021
 
 **Milestone:** Refinement
 * Deliverable: Modifications to previous pipelines, models, and processes based on knowledge of how well they perform together and what can be improved.
@@ -27,16 +27,16 @@ A timeline of tasks' expected start and completion date
 
 | Task/Milestone                                                                                        | Start Date | Completion Date |
 |-------------------------------------------------------------------------------------------------------|------------|-----------------|
-| **Preprocessing**                                                                                         | **10/12/20**   | **10/31/20**        |
+| **Preprocessing**                                                                                         | **10/12/20**   | **10/26/20**        |
 | Research best practices for preprocessing data for machine learning                                   | 10/12/20   | 10/19/20        |
 | Implement preprocessing in pipeline for training and testing and/or real use                          | 10/19/20   | 10/26/20        |
-| **Lift Detection**                                                                                        | **10/26/20**   | **11/30/20**        |
+| **Lift Detection**                                                                                        | **10/26/20**   | **12/01/20**        |
 | Research strategies for event detection using time-series data                                        | 10/26/20   | 11/03/20        |
 | Develop machine learning program for lift detection                                                   | 11/03/20   | 11/10/20        |
 | Determine metrics for evaluating detection model performance                                          | 11/10/20   | 11/17/20        |
 | Document performance of detection solution                                                            | 11/17/20   | 11/24/20        |
 | Implement detection model into pipeline after preprocessing                                           | 11/24/20   | 12/01/20        |
-| **Lift Classification**                                                                                   | **12/01/20**   | **12/31/20**        |
+| **Lift Classification**                                                                                   | **12/01/20**   | **01/05/21**        |
 | Research strategies for time-series classification                                                    | 12/01/20   | 12/08/20        |
 | Develop machine learning program for lift classification                                              | 12/08/20   | 12/15/20        |
 | Determine metrics for evaluating classification model performance                                     | 12/15/20   | 12/22/20        |
