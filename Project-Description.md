@@ -23,3 +23,5 @@ Object lifting detection and risk classification using machine learning on IMU s
 ### [Milestones, Timeline, Effort Matrix](Milestones_Timeline_Effort.md)
 
 ### [Constraints](Constraints.md)
+
+### [Test Plan](Test_Plan.md)
