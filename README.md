@@ -47,8 +47,7 @@ There have been no expenses to date. There are no expenses expected beyond perso
 ### Appendix
 
 
-Source code for lift classification system can be found at the following repository:<br>
-[Code Repository](https://github.com/brennan-thomas/niosh-lifting)
+Source code for lift classification system can be found in the [src](src) directory. Documentation on using the code can be found in the [docs](docs) directory, starting with the [requirements setup](docs/Setup.md).
 
 Research:
 

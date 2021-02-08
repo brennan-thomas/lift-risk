@@ -1,0 +1,12 @@
+name: LIFT
+channels:
+  - defaults
+dependencies:
+  - tensorflow-gpu
+  - python=3.6
+  - pandas
+  - scikit-learn
+  - matplotlib
+  - seaborn
+prefix: D:\Users\btoma\Anaconda3\envs\LIFT
+
