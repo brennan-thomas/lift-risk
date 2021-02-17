@@ -1,5 +1,16 @@
 import unittest
 
+import numpy as np
+from sklearn.preprocessing import LabelBinarizer
+
+import os
+# Some computers don't have enough GPU memory to handle all models stored in memory
+# Turn off GPU acceleration for testing
+# Maybe we can automatically detect if they have enough memory?
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
+
+
 class TestCases(unittest.TestCase):
     def test_PRE1(self):
         '''This test will ensure that data is correctly preprocessed and formatted for lift detection'''
@@ -17,8 +28,29 @@ class TestCases(unittest.TestCase):
 
     def test_TRA1(self):
         '''This test will ensure that cross-validation process is followed for each model'''
-        # TODO
-        pass
+        # TODO get data prep into preprocessing and make sure it is correctly handled there
+        from classify import get_data
+        from train_test import train_all
+        old_folds = get_data()
+        folds = []
+        for f in old_folds:
+            X_train = f[0].loc[:, 'data']
+            X_train = np.stack([x for x in X_train]) # extract from dataframe and stack into samples
+            y_train = LabelBinarizer().fit_transform(f[0].loc[:, 'class_label']) # one-hot embedding
+
+            train = (X_train, y_train)
+
+            X_val = f[2].loc[:, 'data']
+            X_val = np.stack([x for x in X_val]) # extract from dataframe and stack into samples
+            y_val = LabelBinarizer().fit_transform(f[2].loc[:, 'class_label']) # one-hot embedding
+
+            val = (X_val, y_val)
+
+            folds.append((train, val))
+        models = train_all(folds, 'residual_4class_dense', 0)
+
+        self.assertEqual(len(models), 10)
+        
 
     def test_TRA2(self):
         '''This test will ensure that each model of the cross-validation training process is succesfully trained'''

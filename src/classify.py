@@ -88,8 +88,7 @@ def k_fold(data_set, lo, hi):
     # Remove person 4 due to misaligned sensors
     data_set = data_set.loc[data_set['person'] != 4]
     for i in range(lo, hi + 1):
-        if i != 4:
-            folds.append(leave_one_out_split(data_set, i))
+        folds.append(leave_one_out_split(data_set, i))
     return folds
     
 def simple_split(data_set, percentage_test=0.3, num_trials=1):
@@ -112,13 +111,26 @@ def getclasses():
 
     csv = pd.read_csv('./metadata/lift_times_untrimmed.csv')
     # TODO remove bad data samples
-    return pd.DataFrame(csv)['class_label']
+    df = pd.DataFrame(csv)[['filename', 'class_label']]
+    i = list(np.where(df['filename'] == 'Subject_02_P2_Zone12_T1')[0]) + list(np.where(df['filename'] == 'Subject_02_P2_Site_T1')[0])
+    df = df.drop(i).reset_index(drop=True)
+    return df['class_label']
 
 def getpeople():
     """Get subject labels in order for each trial"""
 
     csv = pd.read_csv('./metadata/lift_times_untrimmed.csv')
-    return pd.DataFrame(csv)['person']
+    df = pd.DataFrame(csv)[['filename', 'person']]
+    i = list(np.where(df['filename'] == 'Subject_02_P2_Zone12_T1')[0]) + list(np.where(df['filename'] == 'Subject_02_P2_Site_T1')[0])
+    df = df.drop(i).reset_index(drop=True)
+    return df['person']
+
+def getfilenames():
+    csv = pd.read_csv('./metadata/lift_times_untrimmed.csv')
+    df = pd.DataFrame(csv)[['filename']]
+    i = list(np.where(df['filename'] == 'Subject_02_P2_Zone12_T1')[0]) + list(np.where(df['filename'] == 'Subject_02_P2_Site_T1')[0])
+    df = df.drop(i).reset_index(drop=True)
+    return df['filename']
 
 def createFeatures(sheets, classes):
     """Create a DataFrame with a 'data' and 'class_label' columns, where
@@ -160,7 +172,6 @@ def get_data(simple=False, test_split = 0.25, count=1):
 
 
     filtered, filenames, max_size, _ = pr.preprocess('./source', './metadata/lift_times_untrimmed.csv')
-    classes = pr.getclasses()
     filenames = np.array(filenames)
 
     filtered = np.stack(filtered)
@@ -168,10 +179,13 @@ def get_data(simple=False, test_split = 0.25, count=1):
     class_labels = getclasses()
     features = createFeatures(filtered, class_labels)
     features = features.assign(person=getpeople())
+    features = features.assign(filename=getfilenames())
     
     # Remove Person 4 because of incorrect sensors
     #features = features[features['person'] != 4]
     
+    features = features[~features['filename'].str.contains('04_P2')]
+
     # Split the data, either for cross validation or a simple train/test split
     if not simple:
         folds = k_fold(features, 1, 10)
