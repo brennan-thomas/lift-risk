@@ -80,6 +80,7 @@ def residual_block(in_shape, out_dim, kernel=5, reg=0.01):
 
 def residual_4class_dense(shape, kernel=5, lr=0.001, reg=0.01, dropout=0.5):
     """Construct a model using a modified DeepConvLSTM architecture with residual blocks, with 4 output neurons
+       THIS IS THE BEST MODEL SO FAR
     
     Arguments:
     shape   -- shape of the input tensor ([750, 36] for the NIOSH dataset)

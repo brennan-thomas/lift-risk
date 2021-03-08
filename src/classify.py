@@ -362,13 +362,13 @@ def run_test(args, lr=0.001, reg=0.01, dropout=0.5):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-m', '--model', help='The type of model to use', default='residual_conv_oneskip_preact')
-    parser.add_argument('-e', '--epochs', help='The maximum numer of epochs to train', default=300, type=int)
-    parser.add_argument('-n', '--name', help='The name of this trial', default='test', type=str)
-    parser.add_argument('-s', '--simple', help='Simple split instead of k-fold', action='store_true')
-    parser.add_argument('-t', '--test-split', help='Percentage of data to test on if simple split', default=0.3)
-    parser.add_argument('-c', '--count', help='The number of trials to run in a simple split', default=1, type=int)
-    parser.add_argument('-ks', '--kernel-size', help='Kernel size for conv', default=5, type=int)
+    parser.add_argument('-m', '--model', help='The type of model to use, defined in models.py', default='residual_conv_oneskip_preact')
+    parser.add_argument('-e', '--epochs', help='The maximum numer of epochs to train, default 300. The model may not train for this many epochs if the validation loss stops decreasing.', default=300, type=int)
+    parser.add_argument('-n', '--name', help='The name of this trial, used to name output files', default='test', type=str)
+    parser.add_argument('-s', '--simple', help='Simple split instead of k-fold. This will speed up training considerably (by 10x) but increases the variation between runs. Useful if you are just testing something out.', action='store_true')
+    parser.add_argument('-t', '--test-split', help='Percentage of data to test on if simple split, used for train/test data split', default=0.3)
+    parser.add_argument('-c', '--count', help='The number of trials to run in a simple split. More trials reduces variation but takes longer', default=1, type=int)
+    parser.add_argument('-ks', '--kernel-size', help='Kernel size for the convolution', default=5, type=int)
 
     args = parser.parse_args()
     run_test(args, lr=1e-3, reg=1e-4, dropout=0.5)
