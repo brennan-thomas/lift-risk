@@ -115,3 +115,32 @@ def residual_4class_dense(shape, kernel=5, lr=0.001, reg=0.01, dropout=0.5):
     model.summary()
     return model
 
+def find_start_window(shape, lr=0.001, reg=0.01, dropout=0.5):
+    inpt = Input(shape)
+    print(inpt.shape)
+    x = residual_block(inpt.shape[1:], 128, reg=reg)(inpt)
+    x = residual_block(x.shape[1:], 128, reg=reg)(x)
+    x = residual_block(x.shape[1:], 128, reg=reg)(x)
+    x = residual_block(x.shape[1:], 128, reg=reg)(x)
+    x = residual_block(x.shape[1:], 128, reg=reg)(x)
+    x = residual_block(x.shape[1:], 128, reg=reg)(x)
+    x = Dropout(dropout)(x)
+
+    x = LSTM(128, activation='tanh', return_sequences=True, kernel_regularizer=tf.keras.regularizers.l2(l=reg))(x)
+    x = LSTM(128, activation='tanh', return_sequences=True, kernel_regularizer=tf.keras.regularizers.l2(l=reg))(x)
+    x = Flatten()(x)
+    #x = Dense(128, activation='tanh')(x)
+    x = Dense(128, activation=None, kernel_regularizer=tf.keras.regularizers.l2(l=reg))(x)
+    x = BatchNormalization()(x)
+    x = relu(x)
+    x = Dropout(dropout)(x)
+    x = Dense(1, activation='sigmoid')(x)
+
+    model = Model(inputs=inpt, outputs=x)
+    
+    opt = tf.keras.optimizers.Adam(learning_rate=lr)
+    pr_auc = tf.keras.metrics.AUC(curve='pr')
+    roc_auc = tf.keras.metrics.AUC(curve='roc')
+    model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy', roc_auc, pr_auc])
+    model.summary()
+    return model

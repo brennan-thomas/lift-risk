@@ -85,8 +85,7 @@ def k_fold(data_set, lo, hi):
     """
 
     folds = []
-    # Remove person 4 due to misaligned sensors
-    data_set = data_set.loc[data_set['person'] != 4]
+
     for i in range(lo, hi + 1):
         folds.append(leave_one_out_split(data_set, i))
     return folds
@@ -109,8 +108,7 @@ def simple_split(data_set, percentage_test=0.3, num_trials=1):
 def getclasses():
     """Get class labels in order for each trial"""
 
-    csv = pd.read_csv('./metadata/lift_times_untrimmed.csv')
-    # TODO remove bad data samples
+    csv = pd.read_csv('./metadata/lift_times_complete.csv')
     df = pd.DataFrame(csv)[['filename', 'class_label']]
     i = list(np.where(df['filename'] == 'Subject_02_P2_Zone12_T1')[0]) + list(np.where(df['filename'] == 'Subject_02_P2_Site_T1')[0])
     df = df.drop(i).reset_index(drop=True)
@@ -119,14 +117,14 @@ def getclasses():
 def getpeople():
     """Get subject labels in order for each trial"""
 
-    csv = pd.read_csv('./metadata/lift_times_untrimmed.csv')
+    csv = pd.read_csv('./metadata/lift_times_complete.csv')
     df = pd.DataFrame(csv)[['filename', 'person']]
     i = list(np.where(df['filename'] == 'Subject_02_P2_Zone12_T1')[0]) + list(np.where(df['filename'] == 'Subject_02_P2_Site_T1')[0])
     df = df.drop(i).reset_index(drop=True)
     return df['person']
 
 def getfilenames():
-    csv = pd.read_csv('./metadata/lift_times_untrimmed.csv')
+    csv = pd.read_csv('./metadata/lift_times_complete.csv')
     df = pd.DataFrame(csv)[['filename']]
     i = list(np.where(df['filename'] == 'Subject_02_P2_Zone12_T1')[0]) + list(np.where(df['filename'] == 'Subject_02_P2_Site_T1')[0])
     df = df.drop(i).reset_index(drop=True)
@@ -171,7 +169,7 @@ def get_data(simple=False, test_split = 0.25, count=1):
     """
 
 
-    filtered, filenames, max_size, _ = pr.preprocess('./source', './metadata/lift_times_untrimmed.csv')
+    filtered, filenames, max_size, _, _ = pr.preprocess('./source', './metadata/lift_times_complete.csv')
     filenames = np.array(filenames)
 
     filtered = np.stack(filtered)
@@ -181,9 +179,7 @@ def get_data(simple=False, test_split = 0.25, count=1):
     features = features.assign(person=getpeople())
     features = features.assign(filename=getfilenames())
     
-    # Remove Person 4 because of incorrect sensors
-    #features = features[features['person'] != 4]
-    
+    # Remove Person 4 Phase 2 because of incorrect sensors
     features = features[~features['filename'].str.contains('04_P2')]
 
     # Split the data, either for cross validation or a simple train/test split
@@ -222,15 +218,11 @@ def train_model_fold(train_data, val_data, model_name, epochs, model_num=0, batc
     # Create the named model
     model_func = getattr(models, model_name)
     model = model_func((X_train.shape[1], X_train.shape[2]), kernel, lr=lr, reg=reg, dropout=dropout)
-
-    # TensorBoard logging
-    log_dir = 'logs/fit/{}-{}'.format(test_name, datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))
-    callback = TensorBoard(log_dir=log_dir, histogram_freq=1)
    
     # Fit the model to the fold of data, using early stopping to halt training if val loss stops decreasing
     print('Fitting model {}...'.format(model_num + 1))
     model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size,
-              validation_data=(X_val, y_val), callbacks=[EarlyStopping(monitor="val_loss", mode="min", patience=100, restore_best_weights=True), callback])
+              validation_data=(X_val, y_val), callbacks=[EarlyStopping(monitor="val_loss", mode="min", patience=100, restore_best_weights=True)])
 
     return model
 
@@ -362,7 +354,7 @@ def run_test(args, lr=0.001, reg=0.01, dropout=0.5):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-m', '--model', help='The type of model to use, defined in models.py', default='residual_conv_oneskip_preact')
+    parser.add_argument('-m', '--model', help='The type of model to use, defined in models.py', default='residual_4class_dense')
     parser.add_argument('-e', '--epochs', help='The maximum numer of epochs to train, default 300. The model may not train for this many epochs if the validation loss stops decreasing.', default=300, type=int)
     parser.add_argument('-n', '--name', help='The name of this trial, used to name output files', default='test', type=str)
     parser.add_argument('-s', '--simple', help='Simple split instead of k-fold. This will speed up training considerably (by 10x) but increases the variation between runs. Useful if you are just testing something out.', action='store_true')
