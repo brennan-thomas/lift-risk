@@ -7,7 +7,7 @@ Each significant module of the system (data processing, lift detection, and lift
 ## II. Test Cases
 
 PRE1.1: **Preprocessing Test 1** <br>
-PRE1.2: This test will ensure that data is correctly preprocessed and formatted for lift detection <br>
+PRE1.2: This test will ensure that data are correctly preprocessed and formatted for lift detection <br>
 PRE1.3: This test will load IMU data for each sample from file and slice them using a sliding window to create a dataset suitable for lift detection. <br>
 PRE1.4: Inputs: Stored data files containing information for trials, length of sliding window to use<br>
 PRE1.5: Expected Outputs: Time-series IMU data of the specified window size with 36 channels<br>
@@ -15,9 +15,10 @@ PRE1.6: Normal<br>
 PRE1.7: Whitebox<br>
 PRE1.8: Functional<br>
 PRE1.9: Unit<br>
+RESULT: Trials are correctly sliced into samples<br>
 
 PRE2.1: **Preprocessing Test 2** <br>
-PRE2.2: This test will ensure that data is correctly preprocessed and formatted for lift classification <br>
+PRE2.2: This test will ensure that data are correctly preprocessed and formatted for lift classification <br>
 PRE2.3: This test will load IMU data for each sample from file and format them for consumption by the classification model<br>
 PRE2.4: Inputs: Stored data files containing information for trials<br>
 PRE2.5: Expected Outputs: Time-series IMU data with 36 channels<br>
@@ -25,6 +26,7 @@ PRE2.6: Normal<br>
 PRE2.7: Whitebox<br>
 PRE2.8: Functional<br>
 PRE2.9: Unit<br>
+RESULT: Trials are correctly formatted into Dataframes<br>
 
 TRA1.1: **Training Test 1**<br>
 TRA1.2: This test will ensure that cross-validation process is followed for each model<br>
@@ -35,6 +37,7 @@ TRA1.6: Normal<br>
 TRA1.7: Whitebox<br>
 TRA1.8: Functional<br>
 TRA1.9: Unit<br>
+RESULT: Cross-validation procedure is followed, resulting in results output for each fold<br>
 
 TRA2.1: **Training Test 2**<br>
 TRA2.2: This test will ensure that each model of the cross-validation training process is succesfully trained<br>
@@ -45,6 +48,7 @@ TRA2.6: Normal<br>
 TRA2.7: Blackbox<br>
 TRA2.8: Performance<br>
 TRA2.9: Unit<br>
+RESULT: Each model is trained and results are output<br>
 
 DET1.1: **Detection Test 1** <br>
 DET1.2: This test will ensure that the lift detection model can detect a lift is occurring with a high degree of confidence<br>
@@ -55,6 +59,7 @@ DET1.6: Normal<br>
 DET1.7: Blackbox<br>
 DET1.8: Performance<br>
 DET1.9: Unit<br>
+RESULT: Detection achieves >80% recall for positive class<br>
 
 DET2.1: **Detection Test 2** <br>
 DET2.2: This test will ensure that the lift detection model can detect a lift is *not* occurring with a high degree of confidence<br>
@@ -65,6 +70,7 @@ DET2.6: Normal<br>
 DET2.7: Blackbox<br>
 DET2.8: Performance<br>
 DET2.9: Unit<br>
+RESULT: Detection achieves >80% recall for negative class<br>
 
 DET3.1: **Detection Test 3**<br>
 DET3.2: This test will ensure that if the lift detection model detects a lift, the lift classification process starts<br>
@@ -75,6 +81,7 @@ DET3.6: Normal<br>
 DET3.7: Whitebox<br>
 DET3.8: Functional<br>
 DET3.9: Integration<br>
+RESULT: Detection marks as lift and can set flag to start classification<br>
 
 DET4.1: **Detection Test 4**<br>
 DET4.2: This test will ensure that if the lift detection model does not detect a lift, the lift classification progress does not start<br>
@@ -85,6 +92,7 @@ DET4.6: Normal<br>
 DET4.7: Whitebox<br>
 DET4.8: Functional<br>
 DET4.9: Integration<br>
+RESULT: Detection marks as not lift and will ignore<br>
 
 CLA1.1: **Classification Test 1** <br>
 CLA1.2: This test will ensure that the lift classification model can classify a low-risk lift with a high degree of confidence<br>
@@ -95,6 +103,7 @@ CLA1.6: Normal<br>
 CLA1.7: Blackbox<br>
 CLA1.8: Performance<br>
 CLA1.9: Unit<br>
+RESULT: Model achieves >80% recall for low-risk class <br>
 
 CLA2.1: **Classification Test 2** <br>
 CLA2.2: This test will ensure that the lift classification model can classify a medium-risk lift with a high degree of confidence<br>
@@ -105,6 +114,7 @@ CLA2.6: Normal<br>
 CLA2.7: Blackbox<br>
 CLA2.8: Performance<br>
 CLA2.9: Unit<br>
+RESULT: Model achieves >80% recall for medium-risk class <br>
 
 CLA3.1: **Classification Test 3** <br>
 CLA3.2: This test will ensure that the lift classification model can classify a high-risk lift with a high degree of confidence<br>
@@ -115,6 +125,7 @@ CLA3.6: Normal<br>
 CLA3.7: Blackbox<br>
 CLA3.8: Performance<br>
 CLA3.9: Unit<br>
+RESULT: Model achieves >80% recall for high-risk class <br>
 
 CLA4.1: **Classification Test 4** <br>
 CLA4.2: This test will ensure that the lift classification model can classify a sample that is not a lift with a high degree of confidence<br>
@@ -125,76 +136,18 @@ CLA4.6: Normal<br>
 CLA4.7: Blackbox<br>
 CLA4.8: Performance<br>
 CLA4.9: Unit<br>
+RESULT: Model achieves >80% recall for non-lift class <br>
 
 END1.1: **End-to-end Test 1**<br>
-END1.2: This test will ensure that the entire process returns negative if a lift is not present<br>
-END1.3: This test will give the pipeline a sample known to be marked as no lift by the lift detection model and make sure the process returns with it marked as such<br>
-END1.4: Inputs: Trained detection model, trained classification model, non-lift sample<br>
-END1.5: Expected Outputs: Labeled as no lift<br>
+END1.2: This test will ensure that the entire process correctly classifies lift models<br>
+END1.3: This test will give the pipeline a list of samples from the test data and record the classification performance<br>
+END1.4: Inputs: Trained detection model, trained classification model, test data<br>
+END1.5: Expected Outputs: Test accuracy over 80%<br>
 END1.6: Normal<br>
-END1.7: Whitebox<br>
-END1.8: Functional<br>
-ENd1.9: Integration<br>
-
-END2.1: **End-to-end Test 2**<br>
-END2.2: This test will ensure that the entire process returns low-risk if a low-risk lift is detected<br>
-END2.3: This test will give the pipeline a sample known to be marked as a lift by the lift detection model and marked as low-risk by the classification model, and make sure the process returns with it marked as such<br>
-END2.4: Inputs: Trained detection model, trained classification model, low-risk sample<br>
-END2.5: Expected Outputs: Labeled as low-risk lift<br>
-END2.6: Normal<br>
-END2.7: Whitebox<br>
-END2.8: Functional<br>
-ENd2.9: Integration<br>
-
-END3.1: **End-to-end Test 3**<br>
-END3.2: This test will ensure that the entire process returns medium-risk if a medium-risk lift is detected<br>
-END3.3: This test will give the pipeline a sample known to be marked as a lift by the lift detection model and marked as medium-risk by the classification model, and make sure the process returns with it marked as such<br>
-END3.4: Inputs: Trained detection model, trained classification model, medium-risk sample<br>
-END3.5: Expected Outputs: Labeled as medium-risk lift<br>
-END3.6: Normal<br>
-END3.7: Whitebox<br>
-END3.8: Functional<br>
-ENd3.9: Integration<br>
-
-END4.1: **End-to-end Test 4**<br>
-END4.2: This test will ensure that the entire process returns high-risk if a high-risk lift is detected<br>
-END4.3: This test will give the pipeline a sample known to be marked as a lift by the lift detection model and marked as high-risk by the classification model, and make sure the process returns with it marked as such<br>
-END4.4: Inputs: Trained detection model, trained classification model, high-risk sample<br>
-END4.5: Expected Outputs: Labeled as high-risk lift<br>
-END4.6: Normal<br>
-END4.7: Whitebox<br>
-END4.8: Functional<br>
-ENd4.9: Integration<br>
-
-END5.1: **End-to-end Test 5**<br>
-END5.2: This test will ensure that the entire process returns low-risk if a low-risk lift is detected<br>
-END5.3: This test will give the pipeline a sample known to be marked as a lift by the lift detection model and marked as low-risk by the classification model, and make sure the process returns with it marked as such<br>
-END5.4: Inputs: Trained detection model, trained classification model, low-risk sample<br>
-END5.5: Expected Outputs: Labeled as low-risk lift<br>
-END5.6: Normal<br>
-END5.7: Whitebox<br>
-END5.8: Functional<br>
-ENd5.9: Integration<br>
-
-END6.1: **End-to-end Test 6**<br>
-END6.2: This test will ensure that the entire process returns negative if a lift is not present but is not flagged by the detection model<br>
-END6.3: This test will give the pipeline a sample known to be marked as a lift by the lift detection model but marked as None by the classification model and make sure the process returns with it marked as such<br>
-END6.4: Inputs: Trained detection model, trained classification model, non-lift sample<br>
-END6.5: Expected Outputs: Labeled as no lift<br>
-END6.6: Normal<br>
-END6.7: Whitebox<br>
-END6.8: Functional<br>
-ENd6.9: Integration<br>
-
-END7.1: **End-to-end Test 7**<br>
-END7.2: This test will ensure that the entire process correctly classifies lift models<br>
-END7.3: This test will give the pipeline a list of samples from the test data and record the classification performance<br>
-END7.4: Inputs: Trained detection model, trained classification model, test data<br>
-END7.5: Expected Outputs: Test accuracy over 80%<br>
-END7.6: Normal<br>
-END7.7: Blackbox<br>
-END7.8: Performance<br>
-END7.9: Integration<br>
+END1.7: Blackbox<br>
+END1.8: Performance<br>
+END1.9: Integration<br>
+RESULT: Test accuracy >80%. <br>
 
 ABN1.1: **Abnormal Test 1**<br>
 ABN1.2: This test will determine the detection model's performance on unknown/abnormal data sequences<br>
@@ -205,6 +158,7 @@ ABN1.6: Abnormal<br>
 ABN1.7: Blackbox<br>
 ABN1.8: Performance<br>
 ABN1.9: Unit<br>
+RESULT: Model does not detect lift <br>
 
 ABN2.1: **Abnormal Test 2**<br>
 ABN2.2: This test will determine the classification model's performance on unknown/abnormal data sequences<br>
@@ -215,6 +169,7 @@ ABN2.6: Abnormal<br>
 ABN2.7: Blackbox<br>
 ABN2.8: Performance<br>
 ABN2.9: Unit<br>
+RESULT: Model classifies as non-lift <br>
 
 
 ## III. Test Case Matrix
@@ -233,12 +188,6 @@ ABN2.9: Unit<br>
 | CLA2 | Normal | Blackbox| Performance | Unit |
 | CLA3 | Normal | Blackbox| Performance | Unit |
 | CLA4 | Normal | Blackbox| Performance | Unit |
-| END1 | Normal | Whitebox | Functional | Integration |
-| END2 | Normal | Whitebox | Functional | Integration |
-| END3 | Normal | Whitebox | Functional | Integration |
-| END4 | Normal | Whitebox | Functional | Integration |
-| END5 | Normal | Whitebox | Functional | Integration |
-| END6 | Normal | Whitebox | Functional | Integration |
-| END7 | Normal | Blackbox | Performance | Integration |
+| END1 | Normal | Blackbox | Performance | Integration |
 | ABN1 | Abnormal| Blackbox | Performance | Unit |
 | ABN2 | Abnormal| Blackbox | Performance | Unit |

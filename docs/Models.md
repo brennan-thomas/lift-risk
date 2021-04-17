@@ -2,7 +2,23 @@
 
 ## Lift Detection
 
-Lift detection is still a work in progress. When it is usable this section will be updated with documentation on running it.
+Lift detection is implemented in the file [classify.py](../src/classify.py). The program will train lift detection models and report the performance and results of those models. Training options are controlled through flags passed when the program is run. The available flags are as follows:
+
+`-h --  shows a help message listing all available flags`<br>
+`-m --  the type of model to train. available models are defined in `[models.py](../src/models.py)<br>
+`-e --  the number of epochs to train the models for. an early stopping module is implemented so the model will end training early if validation loss stops decreasing`<br>
+`-n -- the name of this particular run. used to name directors for saving output results and models`<br>
+`-s -- if this flag is used, training will be performed using a simple train/test split rather than cross-validation. this results in faster training but may not be as representative of real model performance`<br>
+`-t -- if a simple split is used, this flag sets the percentage of data to reserve as test data`<br>
+`-c -- the number of models to train if using a simple split. this emulates the cross-validation behavior of training multiple models`<br>
+`-b    -- The batch size to use during training`
+`-w    -- The size of the sliding window to use when splitting the trials into data samples, in frames`
+
+The simplest training setup would be something like this:<br>
+`python detect.py -m find_start_window -e 500 -n test -s`<br>
+to train a single model for 500 epochs using the `find_start_window` architecture.
+
+After training, the model is tested and then results, in the form of heatmaps, metrics, and confusion matrices, are saved in the directory `lift_start/[name]/`, where [name] is defined by the `-n` flag.
 
 ## Lift Classification
 

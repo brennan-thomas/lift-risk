@@ -9,7 +9,7 @@ Brennan Thomas<br>
 Advisor: Dr. Rashmi Jha
 
 ### Abstract
-Repeated lifting of heavy objects has been shown to create increased risk for incidences of lower back pain. While lifting objects cannot be entirely avoided in daily life, proper technique mitigates these risks. Determining when a person is lifting in a risky way can help a worker learn to avoid dangerous lifts and help the employer determine if the workplace layout is prone to requiring them. The goal of this project is to develop a machine learning approach for detecting the risk level of an individual lift based on accelerometer and gyroscope data from various sensors placed on a worker’s body.
+Repeated lifting of heavy objects creates increased risk for incidences of lower back pain. Determining when a person is lifting in a risky way can help a worker learn to avoid dangerous lifts. The goal of this project is to develop a machine learning approach for detecting the risk level of an individual lift based on IMU data from various sensors placed on a worker’s body.
 
 <br>
 
@@ -21,27 +21,24 @@ Repeated lifting of heavy objects has been shown to create increased risk for in
 
 [User Stories](User_Stories.md)<br>
 [Design Diagrams](Design_Diagrams)<br>
-
-Description of diagrams: including conventions and a brief description of the purpose of each component
 <br><br>
 
-### Project Tasks and Timeline
+### [Test Plan](Test_Plan.md)
 
-[Task List](Tasklist.md)<br>
-[Timeline and Effort Matrix](Milestones_Timeline_Effort.md)
-<br><br>
+### [User Manual](docs/Setup.md)
+### [FAQ](docs/FAQ.md)
+### [Spring Final Presentation](presentations/final.pptx)
+### [Final Expo Poster](presentations/poster.pdf)
+
+### [Initial Self-Assessment](essays/initial_assessment.docx)
+### [Final Self-Assessment](essays/final_assessment.docx)
 
 
-### [Design Presentation](presentations/presentation.pptx)
+### Summary of Hours
 
-### [Assessment Essay](essays/Capstone%20Assessment.docx)
+Total: 150 hours<br>
+Hours involved research into machine learning methods for time-series human activity recognition, development of models architecture and framework, and testing and refinement of model performance.
 
-### [Professional Biography](bios/thomas.md)
-<br>
-
-### Budget
-
-There have been no expenses to date. There are no expenses expected beyond personal computing cost.
 <br><br>
 
 ### Appendix

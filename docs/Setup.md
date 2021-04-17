@@ -19,4 +19,4 @@ This will create the conda environment LIFT and install all necessary packages. 
 
 `conda activate LIFT`
 
-to activate the environment. After activation, you can [run the classification system](Models.md) or [run tests](UTest.md) as described in the documentation.
+to activate the environment. After activation, you can [run the detection and classification systems](Models.md).
